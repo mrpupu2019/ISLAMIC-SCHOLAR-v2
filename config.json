@@ -1,0 +1,119 @@
+{
+  "bot": {
+    "owner": "630773653415395340",
+    "prefix": "#",
+    "name": "ISLAMIC SCHOLAR",
+    "BotStatus": "#help | ISLAMIC SCHOLAR",
+    "presenceStatus": "online",
+    "guildVanityURL": "https://discord.gg/PNvStcMr95",
+    "footer": "ISLAMIC SERVER",
+    "iltifatsize": 100
+  },
+  "roles": {
+    "staff": "892761689508954153"
+  },
+  "penals": {
+    "ban": {
+      "staff": "879023400591446077",
+      "log": "1014052873342046240",
+      "limit": 3
+    },
+    "jail": {
+      "staff": "892761689508954153",
+      "roles": "1016306386013003787",
+      "log": "952953540710637648",
+      "limit": 5
+    },
+    "mute": {
+      "staff": "892761689508954153",
+      "roles": "905873677122424833",
+      "vmuterole": "905873677122424833",
+      "log": "952953540710637648",
+      "limit": 5
+    },
+    "warn": {
+      "staff": "892761689508954153",
+      "log": "952953540710637648"
+    }
+  },
+  "logs": {
+    "messagelog": "1014052873342046240",
+    "voicelog": "1014052873342046240"
+  },
+  "channels": {
+    "chat": "952294917076578346",
+    "rules": "892821205042725004",
+    "selfRolesChannel": "952288645967118336",
+    "botdmlog": "1014052873342046240",
+    "urlguardlog": "1014052873342046240"
+  },
+  "filter": {
+    "blockAllLinks": false
+  },
+  "tickets": {
+    "supportRole": ""
+  },
+  "applications": {
+    "category": "",
+    "logChannel": "1014052873342046240",
+    "resultChannel": "",
+    "approvedRole": "879023400591446077",
+    "managerRole": "879023400591446077"
+  },
+  "welcomeDm": {
+    "enabled": true,
+    "image": "https://cdn.discordapp.com/attachments/900005796304269342/1084663538682974238/ticket.png",
+    "footerIcon": "https://cdn.discordapp.com/icons/878534199043321907/a_d07cbf08fa9b55a5166d67e09a651956.gif"
+  },
+  "isdatamod": {
+    "modRole": "892761689508954153",
+    "ownerRole": "878620211845144636",
+    "qaStatusRole": "879023400591446077",
+    "muteRole": "905873677122424833",
+    "girlVerifierRole": "880843257125404672",
+    "girlRole": "958612811842461698",
+    "inviteLink": "https://discord.gg/PNvStcMr95",
+    "footer": "ISLAMIC SERVER",
+    "randomNicknames": [
+      "Ahmed",
+      "Yusuf",
+      "Hassan",
+      "Ali",
+      "Omar",
+      "Ibrahim",
+      "Hamza",
+      "Abdullah",
+      "Khalil",
+      "Bilal",
+      "Idris",
+      "Faris",
+      "Rayyan",
+      "Tariq"
+    ]
+  },
+  "autoreact": {
+    "channels": [
+      "952294553078104125",
+      "952289028978393118",
+      "952294613819981846",
+      "952293983118315641",
+      "952296775966945371",
+      "952294832745897984",
+      "1079129246183718912",
+      "1079129189527068753",
+      "1085243008343097344",
+      "959808417646673950",
+      "952293010324987904",
+      "1196872896199536841",
+      "959809068493602837",
+      "1098900901969801338",
+      "1071072893632520322"
+    ],
+    "emojis": [
+      "<:verify:919867240881487882>",
+      "<:suggestion:925357965920329778>",
+      "<:heart_:930165098939576371>",
+      "<:Is:909520183939461243>"
+    ]
+  }
+}

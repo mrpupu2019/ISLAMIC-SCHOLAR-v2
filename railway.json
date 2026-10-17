@@ -1,0 +1,11 @@
+{
+  "$schema": "https://railway.com/railway.schema.json",
+  "build": {
+    "builder": "NIXPACKS"
+  },
+  "deploy": {
+    "startCommand": "node --max-old-space-size=192 --optimize-for-size index.js",
+    "restartPolicyType": "ALWAYS",
+    "numReplicas": 1
+  }
+}

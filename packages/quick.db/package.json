@@ -1,0 +1,10 @@
+{
+  "name": "quick.db",
+  "version": "7.1.3-compat",
+  "description": "Local quick.db@7-compatible store (cached, batched writes) used by the unified bot",
+  "main": "index.js",
+  "license": "MIT",
+  "peerDependencies": {
+    "better-sqlite3": ">=9"
+  }
+}
