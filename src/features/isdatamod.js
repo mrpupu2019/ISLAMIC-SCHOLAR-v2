@@ -96,7 +96,7 @@ module.exports = (bus, { client, config, paths }, name) => {
 
   function info(message) {
     const member = message.mentions.members.first() || message.member;
-    const status = member.presence.clientStatus || {};
+    const status = (member.presence && member.presence.clientStatus) || {};
     return message.channel.send(new Discord.MessageEmbed()
       .setColor('#00ff00')
       .setTitle(`${member.displayName}'s Info`)

@@ -39,13 +39,40 @@ client.on('shardReconnecting', () => log.info('discord reconnecting...'));
 client.on('rateLimit', (r) => log.warn('rate limited:', { route: r.route, timeout: r.timeout, limit: r.limit }));
 client.once('ready', () => log.info(`logged in as ${client.user.tag} in ${client.guilds.cache.size} server(s)`));
 
+// Track crashes so we can differentiate a normal shutdown from an unexpected one.
+let crashCount = 0;
+const MAX_CRASHES_BEFORE_LONG_WAIT = 5;
+const CRASH_WINDOW_MS = 5 * 60 * 1000; // 5 minutes
+let crashTimes = [];
+
+function isRestartLoop() {
+  const now = Date.now();
+  crashTimes = crashTimes.filter((t) => now - t < CRASH_WINDOW_MS);
+  crashTimes.push(now);
+  return crashTimes.length >= MAX_CRASHES_BEFORE_LONG_WAIT;
+}
+
 process.on('unhandledRejection', (err) => log.error('unhandled promise rejection:', err));
-process.on('uncaughtException', (err) => log.error('uncaught exception:', err));
+process.on('uncaughtException', (err) => {
+  log.error('uncaught exception (auto-restarting):', err);
+  if (isRestartLoop()) {
+    log.error('too many crashes in short window — stopping to prevent restart loop');
+    try { db.close(); } catch (_) { /* nothing saved yet */ }
+    process.exit(1);
+  }
+  // Give Discord websocket time to settle, then relaunch.
+  setTimeout(() => {
+    try { db.close(); } catch (_) { /* nothing saved yet */ }
+    client.destroy();
+    process.exit(1);
+  }, 2000);
+});
 
 let stopping = false;
 function shutdown(signal) {
   if (stopping) return;
   stopping = true;
+  crashTimes = []; // reset crash counter on clean shutdown
   log.info(`${signal} received, saving data and shutting down`);
   try { db.close(); } catch (err) { log.error('failed to save data on shutdown:', err); }
   client.destroy();

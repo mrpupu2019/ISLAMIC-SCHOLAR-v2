@@ -5,9 +5,11 @@ const { vanityCode } = require('./filters');
 module.exports = (bus, { client, config }, name) => {
   bus.on('guildUpdate', name, async (oldGuild, newGuild) => {
     if (oldGuild.vanityURLCode === newGuild.vanityURLCode) return;
-    const entry = (await newGuild.fetchAuditLogs({ type: 'GUILD_UPDATE', limit: 1 })).entries.first();
-    if (!entry || !entry.executor || entry.executor.id === client.user.id || entry.executor.id === newGuild.ownerID) return;
-    const text = `${entry.executor} (${entry.executor.tag}) changed the server vanity URL and was banned. The URL is being restored.`;
+    const entry = (await newGuild.fetchAuditLogs({ type: 'GUILD_UPDATE', limit: 1 }).catch(() => null)) || {};
+    if (!entry || !entry.entries || !entry.entries.first()) return;
+    const e = entry.entries.first();
+    if (!e || !e.executor || e.executor.id === client.user.id || e.executor.id === newGuild.ownerID) return;
+    const text = `${e.executor} (${e.executor.tag}) changed the server vanity URL and was banned. The URL is being restored.`;
     const channel = client.channels.cache.get(config.channels.urlguardlog);
     if (channel) channel.send(text);
     else if (newGuild.owner) newGuild.owner.send(text).catch(() => {});

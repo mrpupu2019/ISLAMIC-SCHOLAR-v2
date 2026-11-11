@@ -62,11 +62,16 @@ module.exports = {
       name: 'banner', usage: 'banner [@member]', description: "Show a member's profile banner.",
       run: async ({ client, message, args, member, channel }) => {
         const target = (await ui.findMember(message, args[0])) || member;
-        const res = await fetch(`https://discord.com/api/v9/users/${target.id}`, { headers: { Authorization: `Bot ${client.token}` } });
-        const { banner } = await res.json();
-        if (!banner) return ui.send(channel, `${target} does not have a profile banner.`);
-        const url = `https://cdn.discordapp.com/banners/${target.id}/${banner}${banner.startsWith('a_') ? '.gif' : '.png'}?size=1024`;
-        return channel.send(ui.embed().setTitle(`${target.user.tag} - Banner`).setImage(url));
+        try {
+          const res = await fetch(`https://discord.com/api/v9/users/${target.id}`, { headers: { Authorization: `Bot ${client.token}` } });
+          if (!res.ok) return ui.fail(channel, `Banner API returned HTTP ${res.status}`);
+          const { banner } = await res.json();
+          if (!banner) return ui.send(channel, `${target} does not have a profile banner.`);
+          const url = `https://cdn.discordapp.com/banners/${target.id}/${banner}${banner.startsWith('a_') ? '.gif' : '.png'}?size=1024`;
+          return channel.send(ui.embed().setTitle(`${target.user.tag} - Banner`).setImage(url));
+        } catch (err) {
+          return ui.fail(channel, `Banner fetch failed: ${err.message}`);
+        }
       },
     },
     {
